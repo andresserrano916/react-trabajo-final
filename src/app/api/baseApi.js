@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getJwt } from '../config/auth/credentials';
 
 const http = axios.create({
     baseURL: 'http://localhost:8080'
@@ -6,8 +7,8 @@ const http = axios.create({
 
 
 http.interceptors.request.use(config => {
-    const token = 'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJBRE1JTiJdLCJzdWIiOiJhbmRyZXMiLCJpYXQiOjE2MDY2MTUxNTksImV4cCI6MTYwNjYxODc1OX0.uLRKRIEOMr7tll6krFXW9fRlCFBxTFxtoJAgKhjj1r_BA_m4ocsyGbQunE-cydgu33fd4JVEdXG00aoYHZBQsA';
-    
+    const token = getJwt();
+
     if(token){
         config.headers.Authorization = `Bearer ${token}`;
     }

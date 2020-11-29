@@ -6,3 +6,5 @@ export const COURSES_ENDPOINT = '/cursos';
 export const ENROLLMENTS_ENDPOINT = '/matriculas';
 
 export const STUDENTS_ENDPOINT = '/estudiantes';
+
+export const LOGIN_ENDPOINT = '/login';

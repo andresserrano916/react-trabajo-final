@@ -1,8 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Dropdown, Icon, Image, Menu } from 'semantic-ui-react';
+import {logout} from './../../app/store/actions/authActions';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const Navbar = () => {
+const mapState = state => ({
+    currentUser: state.auth.currentUser
+});
+
+const actions = {
+    logout
+};
+
+const Navbar = ({currentUser, logout}) => {
     return (
         <Menu fixed="top" inverted>
             <Container>
@@ -27,9 +38,9 @@ const Navbar = () => {
                 </Menu.Item>
                 <Menu.Item position="right">
                     <Image avatar spaced="right" src="/assets/user.png" />
-                    <Dropdown pointing="top left" text="username">
+                    <Dropdown pointing="top left" text={currentUser.sub}>
                         <Dropdown.Menu>
-                            <Dropdown.Item text="Cerrar Sesión" icon="log out" onClick={() => console.log('Salir')}/>
+                            <Dropdown.Item text="Cerrar Sesión" icon="log out" onClick={logout}/>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Menu.Item>
@@ -38,4 +49,9 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+Navbar.propTypes = {
+    currentUser: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired
+};
+
+export default connect(mapState, actions)(Navbar);

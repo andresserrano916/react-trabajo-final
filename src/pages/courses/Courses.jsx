@@ -5,6 +5,7 @@ import LoadingComponent from '../../components/common/LoadingComponent';
 import {openModal, closeModal} from '../../app/store/actions/modalActions';
 import { connect } from 'react-redux';
 import CourseForm from '../../components/courses/CourseForm';
+import { toast } from 'react-toastify';
 
 const actions = {
     openModal,
@@ -35,8 +36,45 @@ const Courses = ({openModal, closeModal}) => {
     }, [obtainCourses]);
 
 
-    const handlerCreateOrEdit = (values) => {
-        console.log(values);
+    const handlerCreateOrEdit = async (values) => {
+        const coursesLst = [...courses];
+        try {
+            if(values.id){
+                const updatedCourse = await CourseService.updateCourse(values);
+                const index = coursesLst.findIndex(a => a.id === values.id);
+                coursesLst[index] = updatedCourse;
+                toast.success('El curso ha sido actualizado');
+            }else{
+                const course = {
+                    nombre: values.nombre,
+                    siglas: values.siglas,
+                    estado: true
+                };
+                const newCourse = await CourseService.saveCourse(course);
+                coursesLst.push(newCourse);
+                toast.success('El curso se ha agregado');
+            }
+            setCourses(coursesLst);
+        } catch (error) {
+            toast.error(error);
+        }
+
+        closeModal();
+    };
+
+    const handleDeleteCourse = async (id) => {
+        setLoading(true);
+        try {
+            let coursesUpdateLst = [...courses];
+            await CourseService.deleteCourse(id);
+            coursesUpdateLst = coursesUpdateLst.filter(c => c.id !== id);
+            setCourses(coursesUpdateLst);
+            toast.success('El curso se ha eliminado');
+        } catch (error) {
+            toast.error(error);
+        } finally{
+            setLoading(false);
+        }
     };
 
     let coursesList = <h4>No hay cursos disponibles</h4>;
@@ -62,7 +100,7 @@ const Courses = ({openModal, closeModal}) => {
                                     onClick={() => openModal(<CourseForm courseId={course.id} submitHandler={handlerCreateOrEdit}/>)} />}
                                 />
                                 <Popup inverted content="Eliminar" 
-                                    trigger={<Button color="red" icon="trash" onClick={() => console.log("eliminar " + course.id)} />}
+                                    trigger={<Button color="red" icon="trash" onClick={() => handleDeleteCourse(course.id)} />}
                                 />
                             </Table.Cell>
                         </Table.Row>

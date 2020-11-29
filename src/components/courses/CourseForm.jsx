@@ -27,6 +27,7 @@ const CourseForm = ({courseId, submitHandler}) => {
     return (
         <FinalForm
             onSubmit={values => submitHandler(values)}
+            initialValues={courseId && course}
             validate={validate}
             render={({handleSubmit, submitting, submitError, invalid, pristine, dirtySinceLastSubmit}) => (
                 <Form onSubmit={handleSubmit} error loading={loading}>
