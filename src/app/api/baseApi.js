@@ -6,7 +6,7 @@ const http = axios.create({
 
 
 http.interceptors.request.use(config => {
-    const token = 'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImFuZHJlcyIsImlhdCI6MTYwNjQ0OTI0MywiZXhwIjoxNjA2NDUyODQzfQ._UeGZTKWXvUQyIz3r7Fz5oVNecJVftYH1MifpG_sFiKbnYJoRvd5VT6fElDDNnFQ4wI1he1DcE3sR769RzfAyg';
+    const token = 'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJBRE1JTiJdLCJzdWIiOiJhbmRyZXMiLCJpYXQiOjE2MDY2MTUxNTksImV4cCI6MTYwNjYxODc1OX0.uLRKRIEOMr7tll6krFXW9fRlCFBxTFxtoJAgKhjj1r_BA_m4ocsyGbQunE-cydgu33fd4JVEdXG00aoYHZBQsA';
     
     if(token){
         config.headers.Authorization = `Bearer ${token}`;

@@ -4,6 +4,7 @@ import CourseService from '../../app/api/courseService';
 import LoadingComponent from '../../components/common/LoadingComponent';
 import {openModal, closeModal} from '../../app/store/actions/modalActions';
 import { connect } from 'react-redux';
+import CourseForm from '../../components/courses/CourseForm';
 
 const actions = {
     openModal,
@@ -31,7 +32,12 @@ const Courses = ({openModal, closeModal}) => {
 
     useEffect(() => {
         obtainCourses();
-    }, [obtainCourses]); 
+    }, [obtainCourses]);
+
+
+    const handlerCreateOrEdit = (values) => {
+        console.log(values);
+    };
 
     let coursesList = <h4>No hay cursos disponibles</h4>;
 
@@ -41,7 +47,7 @@ const Courses = ({openModal, closeModal}) => {
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell width="5">Nombre</Table.HeaderCell>
-                        <Table.HeaderCell width="2">Código</Table.HeaderCell>                        
+                        <Table.HeaderCell width="2">Código</Table.HeaderCell>
                         <Table.HeaderCell width="2"></Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
@@ -52,7 +58,8 @@ const Courses = ({openModal, closeModal}) => {
                             <Table.Cell>{course.siglas}</Table.Cell>
                             <Table.Cell>
                                 <Popup inverted content="Modificar" 
-                                    trigger={<Button color="olive" icon="edit" onClick={() => console.log("editar " + course.id)} />}
+                                    trigger={<Button color="olive" icon="edit"
+                                    onClick={() => openModal(<CourseForm courseId={course.id} submitHandler={handlerCreateOrEdit}/>)} />}
                                 />
                                 <Popup inverted content="Eliminar" 
                                     trigger={<Button color="red" icon="trash" onClick={() => console.log("eliminar " + course.id)} />}
@@ -85,7 +92,7 @@ return (
         <Segment>
             <Button size="large" content="Nuevo" icon="plus square"
                 color="green" onClick={() => {
-                    openModal(<div>Formulario de cursos</div>)
+                    openModal(<CourseForm submitHandler={handlerCreateOrEdit}/>)
             }} />
         </Segment>
         <Container textAlign="center">
