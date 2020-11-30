@@ -35,7 +35,7 @@ const CourseForm = ({courseId, submitHandler}) => {
                     <Field name="nombre" component={TextInput} placeholder="Escriba el nombre" />
                     <Field name="siglas" component={TextInput} placeholder="Siglas el nombre" />
                     {submitError && !dirtySinceLastSubmit && (
-                        <ErrorMessage error={submitError} text="Datos invalidos" />
+                        <ErrorMessage error={submitError} text="Datos inválidos" />
                     )}
                     <Button fluid disabled={(invalid && !dirtySinceLastSubmit) || pristine}
                         loading={submitting}

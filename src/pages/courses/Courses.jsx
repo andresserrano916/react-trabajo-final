@@ -43,7 +43,7 @@ const Courses = ({openModal, closeModal}) => {
                 const updatedCourse = await CourseService.updateCourse(values);
                 const index = coursesLst.findIndex(a => a.id === values.id);
                 coursesLst[index] = updatedCourse;
-                toast.success('El curso ha sido actualizado');
+                toast.success('El curso se ha sido actualizado');
             }else{
                 const course = {
                     nombre: values.nombre,
@@ -95,11 +95,11 @@ const Courses = ({openModal, closeModal}) => {
                             <Table.Cell>{course.nombre}</Table.Cell>
                             <Table.Cell>{course.siglas}</Table.Cell>
                             <Table.Cell>
-                                <Popup inverted content="Modificar" 
+                                <Popup inverted content="Modificar"
                                     trigger={<Button color="olive" icon="edit"
                                     onClick={() => openModal(<CourseForm courseId={course.id} submitHandler={handlerCreateOrEdit}/>)} />}
                                 />
-                                <Popup inverted content="Eliminar" 
+                                <Popup inverted content="Eliminar"
                                     trigger={<Button color="red" icon="trash" onClick={() => handleDeleteCourse(course.id)} />}
                                 />
                             </Table.Cell>

@@ -5,14 +5,15 @@ import LoadingComponent from '../../components/common/LoadingComponent';
 import ModalContainter from '../../components/modal/ModalContainter';
 import { getJwt } from '../config/auth/credentials';
 import Routes from '../config/Routes';
-import {getUser} from './../store/actions/authActions';
+import {getUser, logout} from './../store/actions/authActions';
 import PropTypes from 'prop-types';
 
 const actions = {
-    getUser
+    getUser,
+    logout
 };
 
-const App = ({getUser}) => {
+const App = ({getUser, logout}) => {
     const [appLoaded, setAppLoaded] = useState(false);
 
     useEffect(() => {
@@ -20,6 +21,8 @@ const App = ({getUser}) => {
 
         if(token){
             getUser();
+        }else{
+            logout();
         }
         setAppLoaded(true);
     }, [getUser]);
