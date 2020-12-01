@@ -16,7 +16,7 @@ const useFetchCourse = (id) => {
         }
         setLoading(false);
     }, [id]);
-    
+
     return [course, loading];
 };
 

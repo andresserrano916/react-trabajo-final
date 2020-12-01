@@ -79,7 +79,7 @@ const Students = ({students, loading, loadingStudent, obtainStudents, openModal,
 
                 <Divider horizontal>
                     <Header as="h4">
-                        <Icon name="folder outline" />
+                        <Icon name="unordered list" />
                         Estudiantes
                     </Header>
                 </Divider>

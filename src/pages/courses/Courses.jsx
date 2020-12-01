@@ -6,6 +6,7 @@ import {openModal, closeModal} from '../../app/store/actions/modalActions';
 import { connect } from 'react-redux';
 import CourseForm from '../../components/courses/CourseForm';
 import { toast } from 'react-toastify';
+import useFetchCourses from '../../app/hooks/useFetchCourses';
 
 const actions = {
     openModal,
@@ -16,24 +17,15 @@ const Courses = ({openModal, closeModal}) => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const obtainCourses = useCallback(async () => {
-        try {
-            setLoading(true);
-            const courses = await CourseService.obtainCourses();
-            if(courses){
-                setCourses(courses);
-            }
-            
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
+    const [coursesDB] = useFetchCourses();
 
     useEffect(() => {
-        obtainCourses();
-    }, [obtainCourses]);
+        setLoading(true);
+        if(coursesDB){
+            setCourses(coursesDB);
+            setLoading(false);
+        }
+    }, [coursesDB]);
 
 
     const handlerCreateOrEdit = async (values) => {
@@ -111,7 +103,7 @@ const Courses = ({openModal, closeModal}) => {
     }
 
 if(loading){
-    return <LoadingComponent content="Cargando cursos..." />
+    return <LoadingComponent content="Cargando cursos..." />;
 }
 
 return (

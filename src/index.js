@@ -9,6 +9,7 @@ import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
 import configureStore from './app/store/configureStore';
 import { Provider } from 'react-redux';
+import ScrollToTop from './components/common/ScrollToTop';
 
 const history = createBrowserHistory();
 
@@ -18,7 +19,9 @@ const rootEl = document.getElementById('root');
 const app = (
     <Provider store={store}>
         <Router history={history}>
-            <App/>
+            <ScrollToTop>
+                <App/>
+            </ScrollToTop>
         </Router>
     </Provider>
 );
